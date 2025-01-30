@@ -1,0 +1,30 @@
+.profile-card {
+	border: 5px pink solid;
+	border-radius: 1em;
+	margin: 10px;
+	padding: 10px;
+	width: min(120px, 10vw);
+	transition: transform 0.5s;
+	align-self: stretch;
+	background-color: #313131;
+
+	&.is-entering {
+		opacity: 0;
+		animation: forwards fadeIn 1s;
+	}
+}
+
+.profile-card:hover {
+	transform: scale(1.015);
+	transition: transform 0.1s;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}

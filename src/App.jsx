@@ -44,15 +44,22 @@ const App = () => {
   // Get Titles
   const titles = [...new Set(profiles.map((profile) => profile.title))];
 
+  const [animation, setAnimation] = useState(false);
+  const handleAnimation = () => {
+    setAnimation(false);
+  }
+
   const [title, setTitle] = useState("");
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+    setAnimation(true);
   };
 
   const [search, setSearch] = useState("");
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
     console.log(event.target.value);
+    setAnimation(true);
   };
 
   const filteredProfiles = profiles.filter((profile) => {
@@ -62,6 +69,7 @@ const App = () => {
   const handleClear = () => {
     setTitle("");
     setSearch("");
+    setAnimation(true)
   }
 
   return (
@@ -103,7 +111,7 @@ const App = () => {
             </div>
             <div className="profile-cards">
               {filteredProfiles.map((profile) => (
-                <Card key={profile.email} {...profile} />
+                <Card key={profile.email} {...profile} animate={animation} updateAnimate={handleAnimation} />
               ))}
             </div>
           </>

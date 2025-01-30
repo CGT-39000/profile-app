@@ -11,26 +11,18 @@ nav {
   left: 0;
   background-color: pink;
   width: 100%;
+  display: flex;
 }
 
 nav ul {
   display: flex;
   list-style: none;
+  width: fit-content;
 }
 
 nav ul li {
   display: block;
   margin-right: 50px;
-}
-
-.profile-card {
-  border: 5px pink solid;
-  border-radius: 1em;
-  margin: 10px;
-  padding: 10px;
-  width: min(120px, 10vw);
-  overflow: wrap;
-  transition: transform 0.2s;
 }
 
 select, input {
@@ -39,11 +31,7 @@ select, input {
   padding: 0.2em;
   margin: 0.5em 0.5em 0.65em 0.5em;
   outline: none;
-}
-
-.profile-card:hover {
-  transform: scale(1.02);
-  transition: transform 0.1s;
+  background-color: #313131;
 }
 
 .profile-card__image > img {
@@ -55,8 +43,16 @@ select, input {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 img {
   clip-path: circle();
+}
+
+#theme-changer {
+  margin-left: auto;
+  margin-right: 1em;
+  padding: 0.5em;
+  align-self: center;
 }

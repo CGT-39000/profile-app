@@ -12,6 +12,7 @@ const Navbar = () => {
           <a href="#">Other2</a>
         </li>
       </ul>
+      <button id="theme-changer">Toggle</button>
     </nav>
   );
 };
