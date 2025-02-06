@@ -52,10 +52,19 @@ select, input {
   width: fit-content;
   margin-inline: auto;
   padding: 1em;
+  background-color: #313131;
 }
 
 img {
   clip-path: circle();
+}
+
+.bio {
+  width: 70%;
+  border: pink 2px solid;
+  border-radius: 6px;
+  background-color: #313131;
+  margin: 0.6em;
 }
 
 #theme-changer {

@@ -1,30 +1,59 @@
 import { useState } from "react";
 
 const ProfileForm = () => {
-  const [data, setData] = useState({ name: "", title: "", email: "", bio: "" });
+  const [data, setData] = useState({
+    name: "",
+    title: "",
+    email: "",
+    bio: "",
+    image: null,
+  });
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    if (e.target.name === "image") {
+      const files = e.target.files[0];
+      if (files.size > 2e6) {
+        setErrors({ image: "Image Must Be Under 2Mb", general: "" });
+      } else {
+        setData({ ...data, image: e.target.files[0] });
+      }
+    } else {
+      setData({ ...data, [e.target.name]: e.target.value });
+    }
   };
+
+  const [errors, setErrors] = useState({ image: "", general: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-		const formData = new FormData(e.target);
-		//console.log(formData.get("name"));
+    const formData = new FormData();
+    formData.append("name", data.name.trim());
+    formData.append("title", data.title.trim());
+    formData.append("email", data.email.trim());
+    formData.append("bio", data.bio.trim());
+    data.image && formData.append("image", data.image);
     try {
-      const response = await fetch("https://web.ics.purdue.edu/~maddy/profile-app/send-data.php", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://web.ics.purdue.edu/~maddy/profile-app/send-data.php",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const result = await response.json();
+      if (result.success) {
+        setErrors({ image: "", general: "" });
+      } else {
+        setErrors({ image: "", general: result.message });
+      }
       console.log(result.message);
+    } catch {
+      console.log("error");
     }
-    catch {
-      console.log(e);
-    }
-	};
+  };
 
   return (
     <form onSubmit={handleSubmit} className="profile-form">
+      <h2>Add User</h2>
       <input
         type="text"
         name="name"
@@ -53,14 +82,44 @@ const ProfileForm = () => {
       ></input>
       <br />
       <textarea
+        className="bio"
         name="bio"
         placeholder="Some description"
         required
         value={data.bio}
         onChange={handleChange}
+        maxLength="200"
       ></textarea>
+      <p>{data.bio.length}/200 Chars</p>
+      <label htmlFor="image">Choose A Profile Picture: </label>
       <br />
-      <button type="submit">Submit</button>
+      <input
+        type="file"
+        id="image"
+        name="image"
+        accept="image/gif, image/jpg, image/jpeg, image/png"
+        onChange={handleChange}
+      />
+      <br />
+      <br />
+      <button
+        type="submit"
+        disabled={
+          errors.image === "" ||
+          data.image !== null ||
+          data.bio === "" ||
+          data.name === "" ||
+          data.title === "" ||
+          data.email ||
+          errors.image
+            ? true
+            : false
+        }
+      >
+        Submit
+      </button>
+      {console.log(errors.image === "")}
+      {errors.image && <p>{errors.image}</p>}
     </form>
   );
 };
