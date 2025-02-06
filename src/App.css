@@ -46,6 +46,14 @@ select, input {
   height: 100%;
 }
 
+.profile-form {
+  border: 3px solid pink;
+  border-radius: 6px;
+  width: fit-content;
+  margin-inline: auto;
+  padding: 1em;
+}
+
 img {
   clip-path: circle();
 }

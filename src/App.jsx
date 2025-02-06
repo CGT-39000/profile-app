@@ -5,6 +5,7 @@ import About from "./assets/components/About";
 import Card from "./assets/components/Card";
 import Navbar from "./assets/components/Navbar";
 import Wrapper from "./assets/components/Wrapper";
+import ProfileForm from "./assets/components/ProfileForm";
 import { useState } from "react";
 
 const App = () => {
@@ -47,7 +48,7 @@ const App = () => {
   const [animation, setAnimation] = useState(false);
   const handleAnimation = () => {
     setAnimation(false);
-  }
+  };
 
   const [title, setTitle] = useState("");
   const handleTitleChange = (event) => {
@@ -63,14 +64,17 @@ const App = () => {
   };
 
   const filteredProfiles = profiles.filter((profile) => {
-    return (title === "" || profile.title === title) && profile.name.toLowerCase().includes(search.toLowerCase());
+    return (
+      (title === "" || profile.title === title) &&
+      profile.name.toLowerCase().includes(search.toLowerCase())
+    );
   });
 
   const handleClear = () => {
     setTitle("");
     setSearch("");
-    setAnimation(true)
-  }
+    setAnimation(true);
+  };
 
   return (
     <>
@@ -82,6 +86,9 @@ const App = () => {
           <h1>Profile App</h1>
         </Wrapper>
         <Wrapper>
+          <ProfileForm></ProfileForm>
+        </Wrapper>
+        <Wrapper>
           <About />
         </Wrapper>
         <Wrapper>
@@ -89,7 +96,12 @@ const App = () => {
             <div className="filter-wrapper">
               <div className="filter-select">
                 <label htmlFor="title-select">Select a Title:</label>
-                <select name="" id="title-select" value={title} onChange={handleTitleChange}>
+                <select
+                  name=""
+                  id="title-select"
+                  value={title}
+                  onChange={handleTitleChange}
+                >
                   <option defaultValue value={""}>
                     All
                   </option>
@@ -111,7 +123,12 @@ const App = () => {
             </div>
             <div className="profile-cards">
               {filteredProfiles.map((profile) => (
-                <Card key={profile.email} {...profile} animate={animation} updateAnimate={handleAnimation} />
+                <Card
+                  key={profile.email}
+                  {...profile}
+                  animate={animation}
+                  updateAnimate={handleAnimation}
+                />
               ))}
             </div>
           </>
