@@ -105,20 +105,18 @@ const ProfileForm = () => {
       <button
         type="submit"
         disabled={
-          errors.image === "" ||
-          data.image !== null ||
-          data.bio === "" ||
+          errors.image !== "" ||
           data.name === "" ||
+          data.bio === "" ||
+          data.email === "" ||
           data.title === "" ||
-          data.email ||
-          errors.image
+          data.image === null
             ? true
             : false
         }
       >
         Submit
       </button>
-      {console.log(errors.image === "")}
       {errors.image && <p>{errors.image}</p>}
     </form>
   );

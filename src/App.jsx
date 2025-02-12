@@ -6,41 +6,17 @@ import Card from "./assets/components/Card";
 import Navbar from "./assets/components/Navbar";
 import Wrapper from "./assets/components/Wrapper";
 import ProfileForm from "./assets/components/ProfileForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const App = () => {
-  const profiles = [
-    {
-      img: image_1,
-      name: "John Doe",
-      title: "Software Engineer",
-      email: "a@a.com",
-    },
-    {
-      img: image_2,
-      name: "Jane Doe",
-      title: "Software Tester",
-      email: "b@b.com",
-    },
-    {
-      img: image_1,
-      name: "Jack Doe",
-      title: "Software Engineer",
-      email: "c@c.com",
-    },
-    {
-      img: image_2,
-      name: "Jackie Doe",
-      title: "Software Tester",
-      email: "d@d.com",
-    },
-    {
-      img: image_2,
-      name: "Ava Joe",
-      title: "UX Designer",
-      email: "e@e.com",
-    },
-  ];
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    fetch("https://web.ics.purdue.edu/~maddy/profile-app/fetch-data.php")
+    .then((res) => res.json())
+    .then((data) => {
+      setProfiles(data)
+    })
+  });
 
   // Get Titles
   const titles = [...new Set(profiles.map((profile) => profile.title))];
@@ -59,7 +35,6 @@ const App = () => {
   const [search, setSearch] = useState("");
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
-    console.log(event.target.value);
     setAnimation(true);
   };
 
@@ -124,7 +99,7 @@ const App = () => {
             <div className="profile-cards">
               {filteredProfiles.map((profile) => (
                 <Card
-                  key={profile.email}
+                  key={profile.id}
                   {...profile}
                   animate={animation}
                   updateAnimate={handleAnimation}
