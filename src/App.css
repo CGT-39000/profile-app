@@ -73,3 +73,15 @@ img {
   padding: 0.5em;
   align-self: center;
 }
+
+.pagination {
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+}
+
+.spaced {
+  margin-inline: 1em;
+}

@@ -1,6 +1,4 @@
 import "./App.css";
-import image_1 from "./assets/pfp1.png";
-import image_2 from "./assets/pfp2.png";
 import About from "./assets/components/About";
 import Card from "./assets/components/Card";
 import Navbar from "./assets/components/Navbar";
@@ -9,46 +7,45 @@ import ProfileForm from "./assets/components/ProfileForm";
 import { useEffect, useState } from "react";
 
 const App = () => {
-  const [profiles, setProfiles] = useState([]);
-  useEffect(() => {
-    fetch("https://web.ics.purdue.edu/~maddy/profile-app/fetch-data.php")
-    .then((res) => res.json())
-    .then((data) => {
-      setProfiles(data)
-    })
-  });
-
-  // Get Titles
-  const titles = [...new Set(profiles.map((profile) => profile.title))];
-
-  const [animation, setAnimation] = useState(false);
-  const handleAnimation = () => {
-    setAnimation(false);
-  };
-
   const [title, setTitle] = useState("");
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
-    setAnimation(true);
   };
 
   const [search, setSearch] = useState("");
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
-    setAnimation(true);
   };
 
-  const filteredProfiles = profiles.filter((profile) => {
-    return (
-      (title === "" || profile.title === title) &&
-      profile.name.toLowerCase().includes(search.toLowerCase())
-    );
+  // Get Titles
+  const [titles, setTitles] = useState([]);
+  useEffect(() => {
+    fetch("https://web.ics.purdue.edu/~maddy/profile-app/get-titles.php")
+      .then((res) => res.json())
+      .then((data) => {
+        setTitles(data.titles);
+      });
   });
+
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(1);
+
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    fetch(
+      `https://web.ics.purdue.edu/~maddy/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setProfiles(data.profiles);
+        setCount(data.count);
+        setPage(data.page);
+      });
+  }, [title, search, page]);
 
   const handleClear = () => {
     setTitle("");
     setSearch("");
-    setAnimation(true);
   };
 
   return (
@@ -97,14 +94,25 @@ const App = () => {
               </div>
             </div>
             <div className="profile-cards">
-              {filteredProfiles.map((profile) => (
-                <Card
-                  key={profile.id}
-                  {...profile}
-                  animate={animation}
-                  updateAnimate={handleAnimation}
-                />
+              {profiles.map((profile) => (
+                <Card key={profile.id} {...profile} />
               ))}
+            </div>
+            <div className="pagination">
+              <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+                Previous
+              </button>
+              <span>
+                <p className="spaced">
+                  {page}/{Math.ceil(count / 10)}
+                </p>
+              </span>
+              <button
+                onClick={() => setPage(page + 1)}
+                disabled={page >= Math.ceil(count / 10)}
+              >
+                Next
+              </button>
             </div>
           </>
         </Wrapper>

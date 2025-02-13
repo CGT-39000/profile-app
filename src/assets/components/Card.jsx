@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import style from '../../styles/card.module.css';
 
-const Card = ({ image_url, name, title, email, animate, updateAnimate }) => {
+const Card = ({ image_url, name, title, email}) => {
   return (
-    <div className={`${style["profile-card"]} ${animate ? style["is-entering"] : ""}`} onAnimationEnd={updateAnimate}>
+    <div className={`${style["profile-card"]} ${style["is-entering"]}`}>
       <div className="profile-card__image">
         <img src={image_url} alt="profile image"></img>
       </div>
@@ -18,8 +18,6 @@ const Card = ({ image_url, name, title, email, animate, updateAnimate }) => {
   );
 };
 Card.propTypes = {
-  animate: PropTypes.bool.isRequired,
-  updateAnimate: PropTypes.func.isRequired,
   image_url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
