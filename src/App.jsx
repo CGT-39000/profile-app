@@ -1,122 +1,27 @@
 import "./App.css";
-import About from "./assets/components/About";
-import Card from "./assets/components/Card";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./assets/components/Navbar";
-import Wrapper from "./assets/components/Wrapper";
-import ProfileForm from "./assets/components/ProfileForm";
-import { useEffect, useState } from "react";
+import HomePage from "./assets/pages/HomePage";
+import AddProfilePage from "./assets/pages/AddProfilePage";
+import AboutPage from "./assets/pages/AboutPage";
+import NotFound from "./assets/pages/NotFound";
 
 const App = () => {
-  const [title, setTitle] = useState("");
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const [search, setSearch] = useState("");
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
-
-  // Get Titles
-  const [titles, setTitles] = useState([]);
-  useEffect(() => {
-    fetch("https://web.ics.purdue.edu/~maddy/profile-app/get-titles.php")
-      .then((res) => res.json())
-      .then((data) => {
-        setTitles(data.titles);
-      });
-  });
-
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(1);
-
-  const [profiles, setProfiles] = useState([]);
-  useEffect(() => {
-    fetch(
-      `https://web.ics.purdue.edu/~maddy/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setProfiles(data.profiles);
-        setCount(data.count);
-        setPage(data.page);
-      });
-  }, [title, search, page]);
-
-  const handleClear = () => {
-    setTitle("");
-    setSearch("");
-  };
-
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
-      <main>
-        <Wrapper>
-          <h1>Profile App</h1>
-        </Wrapper>
-        <Wrapper>
-          <ProfileForm></ProfileForm>
-        </Wrapper>
-        <Wrapper>
-          <About />
-        </Wrapper>
-        <Wrapper>
-          <>
-            <div className="filter-wrapper">
-              <div className="filter-select">
-                <label htmlFor="title-select">Select a Title:</label>
-                <select
-                  name=""
-                  id="title-select"
-                  value={title}
-                  onChange={handleTitleChange}
-                >
-                  <option defaultValue value={""}>
-                    All
-                  </option>
-                  {titles.map((title) => (
-                    <option key={title} value={title}>
-                      {title}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="title-select">Enter a Name:</label>
-                <input
-                  type="text"
-                  id="search"
-                  value={search}
-                  onInput={handleSearchChange}
-                ></input>
-                <button onClick={handleClear}>Reset</button>
-              </div>
-            </div>
-            <div className="profile-cards">
-              {profiles.map((profile) => (
-                <Card key={profile.id} {...profile} />
-              ))}
-            </div>
-            <div className="pagination">
-              <button onClick={() => setPage(page - 1)} disabled={page === 1}>
-                Previous
-              </button>
-              <span>
-                <p className="spaced">
-                  {page}/{Math.ceil(count / 10)}
-                </p>
-              </span>
-              <button
-                onClick={() => setPage(page + 1)}
-                disabled={page >= Math.ceil(count / 10)}
-              >
-                Next
-              </button>
-            </div>
-          </>
-        </Wrapper>
-      </main>
+      <HashRouter>
+        <header>
+          <Navbar />
+        </header>
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/add-profile" element={<AddProfilePage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+      </HashRouter>
     </>
   );
 };
