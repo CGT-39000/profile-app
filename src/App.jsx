@@ -10,25 +10,25 @@ import ProfileEditPage from "./assets/pages/ProfileEditPage";
 
 const App = () => {
   return (
-    <>
-      <HashRouter>
-        <header>
-          <Navbar />
-        </header>
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/add-profile" element={<AddProfilePage />} />
-            <Route path="/profile/:id" element={<ProfileDetailPage />}>
-              <Route index element={<ProfileDetailPage />} />
-              <Route path="edit" element={<ProfileEditPage />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-      </HashRouter>
-    </>
+      <>
+        <HashRouter>
+          <header>
+            <Navbar />
+          </header>
+          <main>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/add-profile" element={<AddProfilePage />} />
+              <Route path="/profile/:id" element={<ProfileDetailPage />}>
+                <Route index element={<ProfileDetailPage />} />
+                <Route path="edit" element={<ProfileEditPage />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+        </HashRouter>
+      </>
   );
 };
 
