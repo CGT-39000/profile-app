@@ -1,6 +1,7 @@
 import Card from "../components/Card";
 import Wrapper from "../components/Wrapper";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [title, setTitle] = useState("");
@@ -82,7 +83,9 @@ const HomePage = () => {
             </div>
             <div className="profile-cards">
               {profiles.map((profile) => (
-                <Card key={profile.id} {...profile} />
+                <Link to={`/profile/${profile.id}`} key={profile.id}>
+                  <Card key={profile.id} {...profile} />
+                </Link>
               ))}
             </div>
             <div className="pagination">
