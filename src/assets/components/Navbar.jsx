@@ -26,6 +26,11 @@ const Navbar = () => {
             About
           </Link>
         </li>
+        <li>
+          <Link to="/login" style={{ textAlign: "center", display: "block" }}>
+            Login / Register
+          </Link>
+        </li>
       </ul>
       <button id="theme-changer" onClick={handleModeChange}>
         {mode === "light" ? "dark" : "light"}

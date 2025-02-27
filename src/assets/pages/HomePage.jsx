@@ -81,7 +81,7 @@ const HomePage = () => {
                 <button onClick={handleClear}>Reset</button>
               </div>
             </div>
-            <div className="profile-cards">
+            <div className={["profile-cards"]}>
               {profiles.map((profile) => (
                 <Link to={`/profile/${profile.id}`} key={profile.id}>
                   <Card key={profile.id} {...profile} />

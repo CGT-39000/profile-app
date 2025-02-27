@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import style from '../../styles/card.module.css';
+import style from "../../styles/card.module.css";
 
-const Card = ({ image_url, name, title, email}) => {
+const Card = ({ image_url, name, title, email }) => {
   return (
     <div className={`${style["profile-card"]} ${style["is-entering"]}`}>
       <div className="profile-card__image">
@@ -10,9 +10,7 @@ const Card = ({ image_url, name, title, email}) => {
       <div className="profile-card__content">
         <p>{name}</p>
         <p>{title}</p>
-        <p>
-          <a href={"mailto:$(email)"}>{email}</a>
-        </p>
+        <p>{email}</p>
       </div>
     </div>
   );
