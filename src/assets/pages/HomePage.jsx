@@ -5,17 +5,21 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [title, setTitle] = useState("");
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(1);
+  const [search, setSearch] = useState("");
+  const [titles, setTitles] = useState([]);
+  const [profiles, setProfiles] = useState([]);
+
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const [search, setSearch] = useState("");
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
 
   // Get Titles
-  const [titles, setTitles] = useState([]);
   useEffect(() => {
     fetch("https://web.ics.purdue.edu/~maddy/profile-app/get-titles.php")
       .then((res) => res.json())
@@ -24,10 +28,6 @@ const HomePage = () => {
       });
   });
 
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(1);
-
-  const [profiles, setProfiles] = useState([]);
   useEffect(() => {
     fetch(
       `https://web.ics.purdue.edu/~maddy/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`
