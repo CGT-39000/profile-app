@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import { ModeContext } from "../context/ModeContext";
-import { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggle } from "../../redux/slices/modeSlice";
 
 const Navbar = () => {
-  const {mode, handleModeChange} = useContext(ModeContext);
+  const mode = useSelector((state) => state.mode.mode);
+  const dispatch = useDispatch();
+  const handleModeChange = () => {
+    dispatch(toggle());
+  }
 
   return (
     <nav className="navbar">

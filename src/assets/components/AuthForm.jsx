@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const AuthForm = ({isRegister = false}) => {
+const AuthForm = ({ isRegister = false }) => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -25,7 +25,7 @@ const AuthForm = ({isRegister = false}) => {
     if (isRegister) {
       formData.append("email", data.email.trim());
     }
-    formData.append("action", isRegister ? "register" : "login" );
+    formData.append("action", isRegister ? "register" : "login");
 
     try {
       const response = await fetch(
